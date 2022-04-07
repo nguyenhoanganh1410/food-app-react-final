@@ -1,0 +1,164 @@
+
+@import "/src/styles/grid";
+.login .login_content .login_right .btn_group button span{
+    font-size: 13px !important;
+}
+.login{
+
+    .login_content{
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        grid-column-gap: 25px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+        margin: 100px 0;
+        background-color: #fff;
+        @include md{
+            grid-template-columns: 1fr;
+            .login_left{
+                display: none;
+            }
+        }
+
+        .login_left{
+            padding: 60px 50px;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .login_right{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 50px;
+            h3{
+                font-size: 20px;
+                font-weight: 700;
+            }
+            p{
+                margin: 15px 0;
+                color: rgba(0,0,0,0.3);
+                font-size: 13px;
+                
+            }
+            .create_account{
+                cursor: pointer;
+                color:#ff514e;
+               
+            }
+            .input_form{
+                margin-bottom: 15px;
+                label{
+                    font-size: 13px;
+                }
+                .login-form-field{
+                    display: flex;
+                    align-items: center;
+                    border-radius: 5px;
+                    margin-top: 7px;
+                    background-color: #f5f5f5;
+                    span{
+                        color: rgba(0,0,0,0.2);
+                        margin: 0 8px;
+                        width: 18px;
+                        height: 18px;
+                    }
+                    input{
+                        border: none;
+                        outline: none;
+                        padding: 12px 0;
+                        background-color: transparent;
+                    }
+                }
+            }
+            .save_password{
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+                input{
+
+                }
+                span{
+                    margin-left: 5px;
+                    font-size: 13px;
+                }
+            }
+            .line{
+                text-transform: uppercase;
+                display: flex;
+                justify-content: center;
+                position: relative;
+                margin: 15px 0;
+                &::after{
+                    content: '';
+                    width: 45%;
+                    height: 1px;
+                    background-color: rgba(0,0,0,0.2);
+                    position: absolute;
+                    top:50%;
+                    right: 0%;
+                    transform: translateY(-50%);
+                    border-radius: 5px;
+                }
+                &::before{
+                    content: '';
+                    width: 45%;
+                    height: 1px;
+                    background-color: rgba(0,0,0,0.1);
+                    position: absolute;
+                    top:50%;
+                    left: 0%;
+                    transform: translateY(-50%);
+                    border-radius: 5px;
+                }
+
+            }
+            .submit_btn{
+               display: flex;
+               justify-content: center;
+               align-items: center;
+            }
+            button{
+                font-size: 12px !important;
+                padding: 12px 20px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            }
+            .btn_group{
+                // display: flex;
+                // justify-content: space-between;
+                // align-items: flex-end;
+
+                button{
+                  //  padding: 10px 14px;
+                    //font-size: 12px;
+                    box-shadow: var(--light-shadow);
+                    border-radius: 20px;
+                    color: #333;
+                    background-color: #fff;
+                    // display: flex;
+                    // align-items: center;
+                    // margin: 0;
+                    &:hover{
+                        box-shadow: var(--dark-shadow);
+                        opacity: 1.5;
+                    }
+                }
+                    
+                   
+    
+            //         span{
+            //             font-size: 18px;
+            //             margin-right: 5px;
+            //         }
+            //     }
+             }
+            button{
+
+            }
+        }
+    }
+}

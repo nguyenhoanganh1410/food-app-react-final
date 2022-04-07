@@ -1,0 +1,52 @@
+@import '../../styles/grid';
+
+
+.banner-paths_warpper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 20rem;
+    margin-bottom: 80px;
+    background-image: url("../../imgage/categoryBg.jpg");
+    background-position: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    @include md{
+        margin-bottom: 20px;
+    }
+    h2{
+        text-align: center;
+        font-size: 2rem;
+        color: #fff;
+        text-transform: capitalize;
+    }
+    .banner_paths{
+        margin-top: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span{
+            font-size: 14px;
+            cursor: pointer;
+            margin: 5px;
+            padding: 7px;
+            text-transform: capitalize;
+            color: #fff;
+            transition: 0.2s ease-out;
+           
+            &:hover{
+                color: red;
+           
+            }
+        }  
+        .active{
+            color: red;
+        }
+        
+        .dot{
+            color: #fff;
+        }
+    }
+}

@@ -1,0 +1,221 @@
+@import "../styles/grid";
+
+
+@mixin rings($duration, $delay, $color) {
+    opacity: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0;
+    bottom: 0;
+    content: '';
+    height: 100%;
+    width: 100%;
+    border: 4px solid $color;
+    border-radius: 100%;
+    animation-name: ripple;
+    animation-duration: $duration;
+    animation-delay: $delay;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(.65,0,.34,1);
+    z-index: -1;
+  }
+.home-analysis{
+    .home-analysis-wrapper{
+        background-image: url('../imgage/home_analysis.jpg');
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: center;
+        min-height: 80vh;
+        background-position: bottom;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: relative;
+        
+        .analysis_content{
+          
+            &:hover{
+                .content_text{
+                    background-color: #ff514e;
+                    p, span{
+                        color: #fff;
+                    }
+                    .play_video{
+                        background-color: #fbb403;
+                        &::after {
+                            @include rings(3s, 0s, #fbb403);
+                        }
+                        
+                        &::before {
+                            @include rings(3s, 0.5s, #fbb403);
+                        }
+                    }
+                }
+                .first_child{
+                  
+                        width: 80px;
+                        height: 80px;
+                        left: 30px;
+                        top:0;
+                    
+                  
+                }
+                .second_child{
+                    width: 50px;
+                    height: 50px;
+                    left: -10%;
+                   top:100%;
+                }
+                .third_child{
+                    width: 100px;
+                    height: 100px;
+                    left: 100%;
+                    top:20%;
+                 
+                }
+            
+            }
+            position: absolute;
+            top:50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            .content_text{
+                padding: 2rem;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background-color: #fff;
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70% ;
+                transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+                p{
+                    font-size: 25px;
+                    color: rgba(0,0,0,0.4);
+                    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+                    margin: 0;
+                }
+                span{
+                   
+                    color: rgba(0,0,0,0.8);
+                    font-size: 50px;
+                    font-weight: 700;
+                    letter-spacing: 0.5px;
+                    transition: all 0.5 cubic-bezier(0.075, 0.82, 0.165, 1);
+                }
+                .play_video{
+                    background-color: #ff514e;
+                    z-index: 2;
+                    position: absolute;
+                    right: 15px;
+                    bottom: 0px;
+                    width: 3rem;
+                    height: 3rem;
+                    border-radius: 50%;
+                    box-shadow:  0 0 10px rgba(0,0,0,0.4);
+                    transition: all 0.3s ease-in-out;
+                    cursor: pointer;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 2.2rem;
+                    color: #fff;
+                    &::after {
+                        @include rings(3s, 0s, #ff514e);
+                      }
+                      
+                      &::before {
+                        @include rings(3s, 0.5s, #ff514e);
+                      }
+                }
+            }
+            .block{
+                background-color: #ff514e;
+                width: 50px;
+                height: 50px;
+                position: absolute;
+                top:50%;
+               left: 50%;
+               transform: translate(-50%, -50%);
+               z-index: -1;
+                border-radius: 50%;
+                transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+            }
+            .analysis_video{
+
+            }
+        }
+    }
+
+    .home-analysis-container{
+        background-color: #ff514e;
+         padding: 70px 0;
+         text-align: center;
+        
+
+        .wrapper_web{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+        .row .col-sm-6{
+            margin-bottom: 20px;
+        }
+        .analysis_number{
+            padding: 0 20px;
+            @include sm{
+                .number{
+                    font-size: 32px !important;
+                    font-weight: 600 !important;
+                }
+                .title{
+                    font-size: 16px !important;
+                    font-weight: 400 !important;
+                }
+            }
+            .number{
+                font-weight: 700;
+                font-size:3rem;
+                color: #fff;
+            }
+            .cupOfCoffee{
+
+            }
+            span{
+
+            }
+            .title{
+                font-size: 20px;
+                font-weight: 600;
+                line-height: 24px;
+                color: #fff;
+                margin: 0;
+                text-transform: capitalize;
+            }
+        }
+    }
+}
+
+
+
+  
+  @keyframes ripple {
+  from {
+    opacity: 1;
+    transform: scale3d(0.75,0.75,1);
+  }
+  
+  to {
+    opacity: 0;
+    transform: scale3d(1.5,1.5,1);
+  }
+  }
+  
+  

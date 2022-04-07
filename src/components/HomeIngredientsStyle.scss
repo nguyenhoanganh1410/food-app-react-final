@@ -1,0 +1,83 @@
+@import "../styles/grid";
+.home-ingredients{
+    background-image: url(../imgage/info-img.jpg);
+    position: relative;
+    width: 100%;
+    height: 120vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    background-position-y: -50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    @include xs{   
+        flex-direction: column;
+        background-image: none;
+    }
+    
+    .ingredients_card{
+        &:nth-child(2){
+            margin-left: 50px;
+        }
+    }
+    // .ingredients_left{
+    // }
+    // .ingredients_right{
+    //     .ingredients_card{
+    //         &:nth-child(2){
+    //             margin-right: 50px;
+    //         }
+    //     }
+    // }
+ 
+    .ingredients_card{
+      
+        &:hover{
+            transform: translateY(-6px);
+            background-color: #ff514e;
+           h3, p{
+            color: #fff;
+           }
+        }
+        max-width: 23.75rem;
+        min-height: 11rem;
+       // flex: 1 1;
+        position: relative;
+        padding: 40px;
+        margin: 55px 0;
+        border-radius: 4px;
+        box-shadow: var(--light-shadow);
+        background-color: #fff;
+        transition: all 0.25s ease-in-out;
+        cursor: default;
+        .card_number{
+            position: absolute;
+            top:-20%;
+            left: 20px;
+            font-size: 1.375rem;
+            width: 3.75rem;
+            height: 3.75rem;
+            padding: 18px;
+            text-align: center;
+            border-radius: 50%;
+            box-shadow: var(--light-shadow);
+            color: rgba(0,0,0, 0.84);
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        h3{
+            font-size: 1.375rem;
+            margin-bottom: 8px;
+            color: rgba(0,0,0, 0.84);
+            transition: all 0.12s ease-in-out;
+        }
+        p{
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: rgba(0,0,0, 0.4);
+            transition: all 0.12s ease-in-out;
+        }
+    }
+}

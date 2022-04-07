@@ -1,0 +1,37 @@
+.btn-scroll{
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: #fff;
+    border-radius: 50%;
+    position: fixed;
+    right: 30px;
+    bottom: -60px;
+    box-shadow: var(--light-shadow);
+    cursor: pointer;
+    transition: all 0.38s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 90;
+   opacity: 0;
+   animation: show 1s infinite;
+    span{
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: #ff514e;
+    }
+    &:hover{
+        background-color: #ff514e;
+        span{
+            color: #fff;
+        }
+    }
+}
+.active-btnScrool{
+   opacity: 1;
+    bottom: 40px;
+}
