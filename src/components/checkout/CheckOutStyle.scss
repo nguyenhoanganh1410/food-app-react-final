@@ -1,3 +1,5 @@
+@import '../../styles/grid';
+
 .checkout{
     margin-bottom: 50px;
 
@@ -15,7 +17,10 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 50px;
+                margin-bottom:  50px;
+                @include sm{
+                    margin-bottom:  20px;
+                }
                 .checkout-progress__node{
                     display: flex;
                     flex-direction: column;
@@ -82,7 +87,10 @@
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
-                margin-bottom: 50px;
+                margin-bottom:  50px;
+                @include sm{
+                    margin-bottom:  20px;
+                }
                 h2{
                     font-size: 26px;
                     text-transform: capitalize;
@@ -239,7 +247,9 @@
             background-repeat: no-repeat;
             padding: 30px;
             border-radius: 6px;
-           
+            @include sm{
+                margin-top:  20px;
+            }
            .content_product{
                li{
                    display: flex;

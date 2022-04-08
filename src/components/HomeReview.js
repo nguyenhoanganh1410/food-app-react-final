@@ -21,7 +21,7 @@ const HomeReview = () =>{
                 {
                     data_reviews.map(val =>{
                         return (
-                        <div className='reviewPeople'>
+                        <div key={val.id} className='reviewPeople'>
                             <div className='review_img'>
                             <img src={val.img}/>
                             </div>

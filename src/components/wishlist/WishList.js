@@ -30,8 +30,6 @@ const WishList = () => {
       try {
         const response = await cartApi.getById("wishlist", { id: user.email });
 
-        console.log(response.length);
-
         if (response.length !== 0) {
           //lan dau them vao gio hang
 
@@ -89,7 +87,7 @@ const WishList = () => {
       <div className="wishlist_items">
         {wishList.map((val) => {
           return (
-            <div className="wishlist_item">
+            <div key={`${val.id} ${val.name}`} className="wishlist_item">
               <div className="wishlist_img">
                 <img src={val.img} />
               </div>

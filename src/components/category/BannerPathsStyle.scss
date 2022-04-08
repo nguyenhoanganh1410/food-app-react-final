@@ -16,6 +16,9 @@
     @include md{
         margin-bottom: 20px;
     }
+    @include sm{
+        margin-bottom: 10px;
+    }
     h2{
         text-align: center;
         font-size: 2rem;

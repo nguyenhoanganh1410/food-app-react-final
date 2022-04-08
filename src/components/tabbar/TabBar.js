@@ -5,7 +5,7 @@ import { Routes, Route, Link, Outlet, useNavigate } from "react-router-dom";
 import { FaVoteYea } from "react-icons/fa";
 import Contex from "../../store/Context";
 import { useContext, useEffect } from "react";
-import { SetOpenBar } from "../../store/Actions";
+import { SetOpenBar, SetOpenWishList } from "../../store/Actions";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 const TabBar = () => {
@@ -20,11 +20,11 @@ const TabBar = () => {
       //update name user in header
 
       const header_userName = document.querySelector(".account_name-tabbar");
-      console.log(header_userName);
+    
       header_userName.innerHTML = user.displayName;
-      console.log(user.photoURL);
+   
       if (user.photoURL) {
-        console.log(user.photoURL);
+      
         document.querySelector(".img_account-tabbar").src = user.photoURL;
       }
     }
@@ -51,6 +51,11 @@ const TabBar = () => {
   const handleCloseBar = () => {
     depatch(SetOpenBar(false));
   };
+
+  const handleOpenWishList = () =>{
+    handleCloseBar();
+    depatch(SetOpenWishList(true));
+  }
   return (
     <section class="tab-bar">
       <div className={`bar_content ${openBar ? "active_content" : ""}`}>
@@ -80,6 +85,7 @@ const TabBar = () => {
                 <span>{val.icon}</span>
                 <Link
                   className="nav_link"
+                  onClick={()=>handleCloseBar()}
                   to={
                     val.text === "order online" ? "/category/best-foods" : "/"
                   }
@@ -90,7 +96,9 @@ const TabBar = () => {
             );
           })}
         </ul>
-        <div className="content_favourite">
+        <div className="content_favourite"
+              onClick={()=>handleOpenWishList()}
+        >
           <span>
             <FaVoteYea />
           </span>

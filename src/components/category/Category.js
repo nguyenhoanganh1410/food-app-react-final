@@ -196,7 +196,7 @@ const Category = () => {
     });
   };
 
-  console.log(filter);
+  
   const handleSearchProduct = (e) => {
     // navigate("/category/our-foods");
     // depatch(SetURL("our-foods"));

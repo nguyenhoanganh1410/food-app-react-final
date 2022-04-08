@@ -270,6 +270,9 @@
             button{
                 padding: 10px 40px;
                 font-size: 12px;
+                @include md{   
+                    padding: 10px 30px;
+                  }
                 box-shadow: var(--light-shadow);
                 &:hover{
                     box-shadow: var(--dark-shadow);

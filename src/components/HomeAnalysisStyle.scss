@@ -157,7 +157,9 @@
         background-color: #ff514e;
          padding: 70px 0;
          text-align: center;
-        
+         @include md{   
+           padding: 30px 0px;
+          }
 
         .wrapper_web{
             display: flex;

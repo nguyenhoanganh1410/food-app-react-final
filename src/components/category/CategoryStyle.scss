@@ -60,6 +60,9 @@
         display: grid;
         grid-template-columns: 2fr 8fr;
         grid-column-gap: 20px;
+        @include sm{
+            margin-top:  22px;
+        }
         @include md{
             grid-template-columns: 1fr;
         }

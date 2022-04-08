@@ -34,7 +34,6 @@ function App() {
   
   //detructering...
   const {isSignedIn, user, cart, totalProduct, totalPrice} = state
-  console.log(cart);
  
   // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {

@@ -40,6 +40,7 @@ const CartDetails = () => {
   };
 
   const handleBuyMore = () => {
+    handleHideCart();
     navigate("/category/best-foods");
   };
 

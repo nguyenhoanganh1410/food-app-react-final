@@ -1,6 +1,11 @@
 @import '../../styles/grid';
 
-
+.wrapper_web{
+    @include sm{
+        width: 100% !important;
+            padding: 0 10px !important;
+    }
+}
 .detail_product{
     .loading{
         margin-top: 50px;
@@ -8,6 +13,7 @@
         margin-left: 100px;
     }
     .detail_content{
+        
         .content_img{
         
          
