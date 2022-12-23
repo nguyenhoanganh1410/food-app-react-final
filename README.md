@@ -4,13 +4,13 @@ This project was developed with React.
 
 Project Status : 100%
 
-Live demo: https://foodapp-react.herokuapp.com/
+Live demo: https://food-app-react-final.vercel.app/
 
 ### Used Technologies
 
 * HTML
 * CSS/SCSS
-* React
+* ReactJs
 * React Router
 * Firsebase
 * Json Server
@@ -29,11 +29,11 @@ $ npm start
 
 APIs free with nearly 700 dishes and 15 menus. You can interact with them simply!
 
-https://github.com/igdev116/free-food-menus-api
+https://github.com/nguyenhoanganh1410/food-menus-api.git
 
 API for cart and wishlist
 
-https://github.com/nguyenhoanganh1410/json-server-food-app
+https://github.com/nguyenhoanganh1410/json-server-food-app-final.git
 
 
 
