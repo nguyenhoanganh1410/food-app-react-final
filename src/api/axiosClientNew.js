@@ -11,7 +11,7 @@ import queryString from 'query-string';
 
 const axiosClientNew = axios.create({
    // baseURL: process.env.REACT_APP_API_URL,
-    baseURL: 'https://foodapp-api-json.herokuapp.com/api',
+    baseURL: 'https://json-server-food-app-final.vercel.app/api',
     headers: {
     'content-type': 'application/json',
     },
