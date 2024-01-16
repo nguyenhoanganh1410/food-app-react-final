@@ -1,132 +1,87 @@
-import logo from './logo.svg';
+/* eslint-disable no-unused-vars */
 import './App.css';
-import Header from './components/Header';
-import HomeBanner from './components/HomeBanner';
-import HomePage from './pages/HomePage'
-import DetailProductPage from './pages/DetailProductPage'
+import HomePage from './pages/HomePage';
+import DetailProductPage from './pages/DetailProductPage';
 import LoginPage from './pages/LoginPage';
 import CategoriesPage from './pages/CategoriesPage';
-import CheckOutPage from './pages/CheckOutPage'
-import {fillter_food} from './data/data'
-import cartApi from "./api/cartApi";
-
-import {Routes, Route, useParams} from 'react-router-dom'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebase from 'firebase/compat/app';
+import CheckOutPage from './pages/CheckOutPage';
+import OrdersPage from './pages/OrdersPage'
+import { Routes, Route, useParams } from 'react-router-dom';
 import 'firebase/compat/auth';
 import { useContext, useEffect, useState } from 'react';
-import { SetCart, SetIsSignedIn, SetUser, SET_ISSIGNEDIN } from './store/Actions';
+import {
+  SetIsSignedIn,
+  SetUser,
+} from './store/Actions';
 import Contex from './store/Context';
-import user_icon from './imgage/userIcon.jpg'
-import productApi from './api/productApi';
-import axios from 'axios';
-// Configure Firebase.
-const config = {
-  apiKey: 'AIzaSyDAEHARU259_dWmmjVoSUPWf7yKqf70PEY',
-  authDomain: 'food-app-react-b7a63.firebaseapp.com',
-  // ...
-};
-firebase.initializeApp(config);
+import user_icon from './imgage/userIcon.jpg';
+import { auth } from './firebase';
+import { ToastContainer } from 'react-toastify';
+import { toastConfig } from './utils';
 
 function App() {
+  const { state, depatch } = useContext(Contex);
+  const { isSignedIn, user, cart, totalProduct, totalPrice } = state;
 
-  const {state, depatch} = useContext(Contex)
-  
-  //detructering...
-  const {isSignedIn, user, cart, totalProduct, totalPrice} = state
- 
-  // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
-  
-    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(u => {
-     
-     
-      if(!u){
-        //user log out, handle
-        console.log('not login');
-        depatch(SetIsSignedIn(false))
+    const unregisterAuthObserver = auth.onAuthStateChanged((u) => {
+      if (!u) {
+        depatch(SetIsSignedIn(false));
         document.querySelector('.img_account').src = user_icon;
-        //update name user in header
-        const header_userName = document.querySelector('.account_name')
-        header_userName.innerHTML = "Sign In"
+        const header_userName = document.querySelector('.account_name');
+        header_userName.innerHTML = 'Đăng nhập';
+      } else {
+        depatch(SetIsSignedIn(true));
+        depatch(SetUser(u));
+        const header_userName = document.querySelector('.account_name');
+        header_userName.innerHTML = u.displayName;
+        document.querySelector('.img_account').src = u.photoURL;
       }
-      else{ 
-        depatch(SetIsSignedIn(true))
-        depatch(SetUser(u))
-        console.log("login");
-        //update name user in header
-        const header_userName = document.querySelector('.account_name')
-        header_userName.innerHTML = u.displayName
-         document.querySelector('.img_account').src = u.photoURL
-       // console.log("login : ", user);
-
-        //  //fetch product in cart
-        // const fetchCartList = async () => {
-        //   try {
-        //     const response = await cartApi.getById("cart", u.email);
-        //     console.log(u.email);
-        //     depatch(SetCart(response[0].items));
-        //     console.log(response);
-        //   } catch (error) {
-        //     console.log("Failed to fetch product list: ", error);
-        //   }
-        // };
-        // fetchCartList();
-      }
-
     });
 
-
-    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
+    return () => unregisterAuthObserver();
   }, []);
 
-  
   return (
-    <div className="App">
-       <Routes>
-                <Route path='/' element={<HomePage />} />
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/checkout' element={<CheckOutPage />} />
-              
-                <Route path="best-foods" >
-                      <Route path=":FoodID" element={<DetailProductPage />} />
-                </Route>
-                <Route path="drinks" >
-                      <Route path=":FoodID" element={<DetailProductPage />} />
-                </Route>
-                <Route path="breads" >
-                      <Route path=":FoodID" element={<DetailProductPage />} />
-                </Route>
-                <Route path="burgers" >
-                      <Route path=":FoodID" element={<DetailProductPage />} />
-                </Route>
-                <Route path="sandwiches" >
-                      <Route path=":FoodID" element={<DetailProductPage />} />
-                </Route>
-                <Route path="pizzas" >
-                      <Route path=":FoodID" element={<DetailProductPage />} />
-                </Route>
+    <div className='App'>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/checkout' element={<CheckOutPage />} />
+        <Route path='/my-orders' element={<OrdersPage />} />
 
-                <Route path="category" element={<CategoriesPage />}>
-                     
-                  
-                   <Route path=":typeFoodID" element={<CategoriesPage />} />
-              
-                 
-                </Route>
-                <Route
-                    path="*"
-                    element={
-                        <main style={{ padding: "1rem" }}>
-                        <p>There's nothing here!</p>
-                        </main>
-                    }
-                    />
-               
+        <Route path='best-foods'>
+          <Route path=':FoodID' element={<DetailProductPage />} />
+        </Route>
+        <Route path='drinks'>
+          <Route path=':FoodID' element={<DetailProductPage />} />
+        </Route>
+        <Route path='breads'>
+          <Route path=':FoodID' element={<DetailProductPage />} />
+        </Route>
+        <Route path='burgers'>
+          <Route path=':FoodID' element={<DetailProductPage />} />
+        </Route>
+        <Route path='sandwiches'>
+          <Route path=':FoodID' element={<DetailProductPage />} />
+        </Route>
+        <Route path='pizzas'>
+          <Route path=':FoodID' element={<DetailProductPage />} />
+        </Route>
 
-            </Routes>
-     
-        
+        <Route path='category' element={<CategoriesPage />}>
+          <Route path=':typeFoodID' element={<CategoriesPage />} />
+        </Route>
+        <Route
+          path='*'
+          element={
+            <main style={{ padding: '1rem' }}>
+              <p>There's nothing here!</p>
+            </main>
+          }
+        />
+      </Routes>
+      <ToastContainer {...toastConfig} />
     </div>
   );
 }

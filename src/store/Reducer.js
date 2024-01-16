@@ -13,8 +13,8 @@ import {
   SET_FIRSTADD,
   SET_WISHLIST,
   SET_FIRSTADDWiSH,
-  SET_OPENWISHLIST
-} from "./Actions";
+  SET_OPENWISHLIST,
+} from './Actions';
 
 //innite state
 const initState = {
@@ -23,16 +23,16 @@ const initState = {
   totalPrice: 0,
   cart: [],
   wishList: [],
-  firstAddWish : true,
+  firstAddWish: true,
   user: null,
   isSignedIn: false,
   showDialog: false,
   //url param call API
-  url: "best-foods",
+  url: 'burgers',
   openBar: false,
   openWishList: false,
   //lan dau them vao gio hang
-  firstAdd : true
+  firstAdd: true,
 };
 
 //depatch
@@ -47,7 +47,7 @@ const Reducer = (state, action) => {
         totalPrice: action.payload.reduce((sum, val) => {
           return +val.price * val.quatity + sum;
         }, 0),
-        cart: action.payload
+        cart: action.payload,
       };
     case SET_ISSIGNEDIN:
       return {
@@ -74,26 +74,26 @@ const Reducer = (state, action) => {
         ...state,
         openBar: action.payload,
       };
-      case SET_FIRSTADD:
-        return {
-          ...state,
-          firstAdd: action.payload,
-        };
-        case SET_FIRSTADDWiSH:
-          return {
-            ...state,
-            firstAddWish: action.payload,
-          };
-        case SET_WISHLIST:
-          return {
-            ...state,
-            wishList: action.payload,
-          };
-          case SET_OPENWISHLIST:
-            return {
-              ...state,
-              openWishList: action.payload,
-            };
+    case SET_FIRSTADD:
+      return {
+        ...state,
+        firstAdd: action.payload,
+      };
+    case SET_FIRSTADDWiSH:
+      return {
+        ...state,
+        firstAddWish: action.payload,
+      };
+    case SET_WISHLIST:
+      return {
+        ...state,
+        wishList: action.payload,
+      };
+    case SET_OPENWISHLIST:
+      return {
+        ...state,
+        openWishList: action.payload,
+      };
   }
 };
 

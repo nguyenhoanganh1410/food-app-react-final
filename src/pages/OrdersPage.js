@@ -13,14 +13,16 @@ import BannerPaths from '../components/category/BannerPaths';
 import ProductDetail from '../components/detail/ProductDetail';
 import CheckOut from '../components/checkout/CheckOut';
 import TabBar from '../components/tabbar/TabBar';
+import MyOrder from '../components/my-orders'
 import WishList from '../components/wishlist/WishList';
-const CheckOutPage = () => {
+const OrdersPage = () => {
   return (
     <React.Fragment>
       <Header />
       <BannerPaths />
       <CartDetails />
-      <CheckOut />
+      {/* <CheckOut /> */}
+      <MyOrder />
       <BtnScroll />
       <WishList />
       <FooterApp />
@@ -30,4 +32,4 @@ const CheckOutPage = () => {
   );
 };
 
-export default CheckOutPage;
+export default OrdersPage;

@@ -1,4 +1,4 @@
-@import "media";
+@import 'media';
 
 $cols: 12;
 $gutter: 20px;
@@ -6,16 +6,14 @@ $gutter: 20px;
 .row {
   display: flex;
   flex-wrap: wrap;
-   margin: -$gutter/2;
+  margin: -$gutter/2;
 
-   @for $i from 1 through $cols {
-     .col-#{$i}{
-       width: (100% / 12) * $i;
-       padding: $gutter/2;
-     }
-
-   }
-
+  @for $i from 1 through $cols {
+    .col-#{$i} {
+      width: (100% / 12) * $i;
+      padding: $gutter/2;
+    }
+  }
 
   @for $i from 1 through $cols {
     @include xs {

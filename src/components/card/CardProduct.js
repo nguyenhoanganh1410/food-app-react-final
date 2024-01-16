@@ -1,203 +1,146 @@
-import { AiOutlineShoppingCart, AiTwotoneStar } from "react-icons/ai";
+import { AiOutlineShoppingCart, AiTwotoneStar } from 'react-icons/ai';
 
-import { BsHeart } from "react-icons/bs";
-import { IoLocationSharp } from "react-icons/io5";
+import { BsHeart } from 'react-icons/bs';
+import { IoLocationSharp } from 'react-icons/io5';
 
-import "./CardProductStyle.scss";
-import { useParams, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import Contex from "../../store/Context";
-import cartApi from "../../api/cartApi";
-import { SetCart, SetDialogShow, SetFirstAdd, SetFirstAddWish, SetWishList } from "../../store/Actions";
+import './CardProductStyle.scss';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useCallback, useContext, useState } from 'react';
+import Contex from '../../store/Context';
+import cartApi from '../../api/cartApi';
+import {
+  SetCart,
+  SetDialogShow,
+  SetFirstAdd,
+  SetFirstAddWish,
+  SetWishList,
+} from '../../store/Actions';
+import { formatCash, toastInfo, toastSuccess } from '../../utils';
+import {
+  addToCart,
+  getCartByProductId,
+  updateProductInCart,
+} from '../../firebase/queries/cart';
+import LoadingPage from '../../pages/LoadingPage';
+import {
+  addToWishlist,
+  getWishlistByProductId,
+  updateProductInWishlist,
+} from '../../firebase/queries/wishlist';
+import { MESSAGE_ADDED_TO_CARD, MESSAGE_ADDED_TO_WISHLIST, MESSAGE_WISHLIST_ERROR } from '../../constants';
 
-const CardProduct = ({ dislayItems, item, notify, notifyFavotites }) => {
-  const params = useParams();
+const CardProduct = ({ dislayItems, item, notify }) => {
   const navigate = useNavigate();
-
-  //get url global value
   const { state, depatch } = useContext(Contex);
-  //detructering...
-  const { url, firstAdd, isSignedIn, user, cart,firstAddWish,wishList } = state;
+  const { url, isSignedIn, user } = state;
+  const [loading, setLoading] = useState(false);
 
-  //chuyen huong khi click vao tung san pham
   const hanldClickItem = (id) => {
     navigate(`/${url}/${id}`);
   };
 
-  const handleAddCart = () => {
-    //kiem tra dang nhap chua
-    if(isSignedIn){
-    //lan dau them sanpham vao gio hang
-      if (firstAdd && isSignedIn) {
-        //add product in cart
-        const addIntoCart = async () => {
-          try {
-            const response = await cartApi.addProductIntoCart(
-              "cart",
-              user.email,
-              item
-            );
-            notify();
-
-            //khong con la lan dau nua
-            depatch(SetFirstAdd(false));
-          } catch (error) {
-            console.log("Failed to fetch product list: ", error);
-          }
+  const handleAddToCard = useCallback(async () => {
+    if (!isSignedIn) depatch(SetDialogShow(true));
+    try {
+      setLoading(true);
+      const products = await getCartByProductId(item.id);
+      if (products.length === 0) {
+        const cartParam = {
+          productId: item.id,
+          userId: user.uid,
+          quality: 1,
         };
-        addIntoCart();
+        await addToCart(cartParam);
       } else {
-        const newCart = checkCart(cart, item);
-        depatch(SetCart(newCart));
-
-        const addIntoCart = async () => {
-          try {
-            const response = await cartApi.updateProductInCart(
-              "cart",
-              user.email,
-              newCart
-            );
-            notify();
-          } catch (error) {
-            console.log("Failed to fetch product list: ", error);
-          }
-        };
-        addIntoCart();
+        await updateProductInCart(products[0].id, {
+          quality: products[0].quality + 1,
+        });
       }
+      toastSuccess(MESSAGE_ADDED_TO_CARD)
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
-    else{
-       //thông báo phải login mới thực hiện được chức năng( dialogshow)
-       depatch(SetDialogShow(true));
-    }
-  };
+  }, [isSignedIn, item]);
 
-
-  //xu ly add to wishList
-  const handleAddWishList = () =>{
-     //kiem tra dang nhap chua
-     if(isSignedIn){
-      if (firstAddWish) {
-        //add product in cart
-        const addIntoWishList = async () => {
-          try {
-            const response = await cartApi.addProductIntoWishList(
-              "wishlist",
-              user.email,
-              item
-            );
-            //khong con la lan dau nua
-            depatch(SetFirstAddWish(false));
-          } catch (error) {
-            console.log("Failed to fetch product list: ", error);
-          }
+  const handleAddToWishList = useCallback(async () => {
+    if (!isSignedIn) depatch(SetDialogShow(true));
+    try {
+      setLoading(true);
+      const products = await getWishlistByProductId(item.id);
+      if (products.length === 0) {
+        const cartParam = {
+          productId: item.id,
+          userId: user.uid,
         };
-        addIntoWishList();
+        await addToWishlist(cartParam);
+        toastSuccess(MESSAGE_ADDED_TO_WISHLIST);
       } else {
-        const newWishList = checkWishList(wishList,item);
-      
-        depatch(SetWishList(newWishList));
-
-        const addIntoWishList = async () => {
-          try {
-            const response = await cartApi.updateProductInCart(
-              "wishlist",
-              user.email,
-              newWishList
-            );
-           
-          } catch (error) {
-            console.log("Failed to fetch product list: ", error);
-          }
-        };
-       addIntoWishList();
+        toastInfo(MESSAGE_WISHLIST_ERROR);
       }
-      notifyFavotites();
-     } else{
-       //thông báo phải login mới thực hiện được chức năng( dialogshow)
-       depatch(SetDialogShow(true));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
-  }
+  }, [isSignedIn, item]);
 
-  //kiem tra sp da co trong cart chua
-  const checkCart = (cartFood, food) => {
-   
-    let check = false;
-    //kiem tra san pham muon them da co trong cart chua?
-    const newCart = cartFood.map((val) => {
-      if (val.id === food.id) {
-        val.quatity = val.quatity + 1;
-        check = true;
-      }
-      return val;
-    });
-    const CartNew = [...cartFood, { ...food, quatity: 1 }];
-    if (check) {
-      return newCart;
-    }
-    return CartNew;
-  };
-
-  //kiem tra item trong wishlist ton tai chua
-  const checkWishList = (WishList,food) =>{
-    //them san pham moi vao array
-    const CartNew = [...WishList, food];
-   
-    //loc san pham khong trung nhau
-    const arrayWishList = CartNew.filter( (val, idx) =>{
-      return idx === CartNew.findIndex(v => val.id === v.id);
-    })
-
-    return arrayWishList;
-  }
-
-
-  
   return (
     <div
       key={item.id}
       className={`shop-product ${dislayItems} col-md-4 col-xs-6`}
     >
-      <div
-        className="shop-product__img"
-        onClick={() => hanldClickItem(item.id)}
-      >
-        <img src={item.img} alt="image erro" />
-        <div className="shop-product__rate">
-          <span>
-            <AiTwotoneStar />
-          </span>
-          <span className="rate-number">{item.rate}</span>
-        </div>
-      </div>
-      <div className="shop-product__content">
+      {loading && <LoadingPage />}
+      <div style={dislayItems === 'col-12' ? {display: "flex"} : {}} className='product-block'>
         <div
-          className="shop-product__name"
+          className='shop-product__img'
           onClick={() => hanldClickItem(item.id)}
         >
-          {item.name}
-        </div>
-        <p className="shop-product__decription">{item.dsc}</p>
-        <div className="shop-product__row">
-          <div className="row_location">
-            <span className="location-icon">
-              <IoLocationSharp />
+          <img
+            src={item.images.length > 0 ? item.images[0] : ''}
+            alt='image erro'
+          />
+          <div className='shop-product__rate'>
+            <span>
+              <AiTwotoneStar />
             </span>
-            <span className="location-name">{item.country}</span>
-          </div>
-          <div className="row_price">
-            <span>{`$${item.price}`}</span>
+            <span className='rate-number'>{item.rate}</span>
           </div>
         </div>
-      </div>
-      <div className="shop-product__btns">
-        <div className="shop-product__btn" onClick={() => handleAddWishList()}>
-          <BsHeart />
+        <div className='shop-product__content'>
+          <div
+            className='shop-product__name'
+            onClick={() => hanldClickItem(item.id)}
+          >
+            {item.name}
+          </div>
+          <p className='shop-product__decription'>{item.desc}</p>
+          <div className='shop-product__row'>
+            <div className='row_location'>
+              <span className='location-icon'>
+                <IoLocationSharp />
+              </span>
+              <span className='location-name'>{item.country}</span>
+            </div>
+            <div className='row_price'>
+              <span>{formatCash(item.price)}</span>
+            </div>
+          </div>
         </div>
-        <div className="shop-product__btn" onClick={() => handleAddCart()}>
-          <AiOutlineShoppingCart />
+        <div className='shop-product__btns'>
+          <div
+            className='shop-product__btn'
+            onClick={() => handleAddToWishList()}
+          >
+            <BsHeart />
+          </div>
+          <div className='shop-product__btn' onClick={() => handleAddToCard()}>
+            <AiOutlineShoppingCart />
+          </div>
         </div>
+        <div className='shop-product__label'></div>
       </div>
-      <div className="shop-product__label"></div>
     </div>
   );
 };

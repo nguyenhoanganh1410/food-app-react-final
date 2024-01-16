@@ -41,7 +41,7 @@ const HomeAnalysis = () =>{
                     <div className='analysis_content'>
                         <div className='content_text'>
                             <p>Sandwich</p>
-                            <span>$45</span>
+                            <span>45</span>
                             <div className='play_video'><MdOutlineArrowRight /></div>
                         </div>
                        

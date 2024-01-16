@@ -17,9 +17,8 @@
    // overflow: hidden;
     background-color: rgba(0, 0, 0, 0.01);
     transition: all 0.35s ease-in-out;
-    cursor: default;
+    cursor: pointer;
     border-radius: 6px;
-   
     &:hover{
         transform: translateY(-10px);
         background-color: rgba(255,81,78,.25);
