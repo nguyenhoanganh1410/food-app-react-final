@@ -22,6 +22,7 @@ const MyOrder = () => {
     try {
       const q = query(
         collection(db, 'orders'),
+        where('deleted', '==', false),
         where('owner', '==', user.uid),
         orderBy('createdAt', 'desc')
       );
@@ -80,6 +81,7 @@ const MyOrder = () => {
               const handleStatus = () => {
                 if(order.status === orderStatus.newOrder) return 'Chờ xác nhận'
                 else if(order.status === orderStatus.shipping) return 'Đang giao hàng'
+                else if(order.status === orderStatus.pending) return 'Đang làm món'
                 else return 'Hoàn thành'
               }
               return (

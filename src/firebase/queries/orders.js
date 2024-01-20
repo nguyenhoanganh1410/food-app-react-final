@@ -22,6 +22,7 @@ export const addOrder = async (data) => {
     payment: data.payment,
     products: data.products,
     createdAt: Timestamp.now(),
+    deleted: false
   });
   return commentDocument;
 };

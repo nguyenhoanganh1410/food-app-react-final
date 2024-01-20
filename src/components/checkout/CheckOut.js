@@ -20,7 +20,8 @@ import { deleteProductInCart } from '../../firebase/queries/cart';
 export const orderStatus = {
   newOrder: 'new-order',
   shipping: 'shipping',
-  done: 'done',
+  completed: 'completed',
+  pending: 'pending'
 };
 
 var validRegex =
